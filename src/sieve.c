@@ -1,6 +1,6 @@
 /*******************
 ** 2011-09-17
-** É¸·¨ÇóËØÊı
+** ç­›æ³•æ±‚ç´ æ•°
 */
 #include <stdio.h>
 #include <stdlib.h>
@@ -15,14 +15,14 @@
 char BaseCache[SIZE], WorkCache[SIZE];
 int LOWSQRT, HIGHSQRT;
 int PRIMES[42333];
-/* 42331¸öËØÊı£¬0ºÅÎ»´æÊıÄ¿£¬Ä©ºÅÎ»´æÏÂÒ»¸öËØÊı¡£
-   ·ÀÖ¹Pi(int x)ÖĞPRIMES[c + 1]Ô½½ç */
+/* 42331ä¸ªç´ æ•°ï¼Œ0å·ä½å­˜æ•°ç›®ï¼Œæœ«å·ä½å­˜ä¸‹ä¸€ä¸ªç´ æ•°ã€‚
+   é˜²æ­¢Pi(int x)ä¸­PRIMES[c + 1]è¶Šç•Œ */
 
 void initCache(void)
 {
     int p, i;
     memset(BaseCache, 1, SIZE);
-    /* É¸È¥3 5 7 11 13 17µÄ±¶Êı */
+    /* ç­›å»3 5 7 11 13 17çš„å€æ•° */
     for (p = 3; p <= 17; p += 2)
     {
         if (p == 9 || p == 15)
@@ -45,19 +45,19 @@ void firstSieve(void)
     WorkCache[6] = 1;	//13
     WorkCache[8] = 1;	//17
 
-    /* WorkCacheÖ»´¢´æÆæÊı£¬ËùÓĞÊı¾İ·¶Î§ÊÇ(RANGE) */
+    /* WorkCacheåªå‚¨å­˜å¥‡æ•°ï¼Œæ‰€æœ‰æ•°æ®èŒƒå›´æ˜¯(RANGE) */
     LOWSQRT = (int)sqrt(RANGE - 1);
 
     for (p = 19; p <= LOWSQRT; p += 2)
     {
-        if (WorkCache[p / 2])	//Èç¹ûpÊÇËØÊı, ´ÓpµÄp±¶¿ªÊ¼, É¸µôÆæÊı±¶
+        if (WorkCache[p / 2])	//å¦‚æœpæ˜¯ç´ æ•°, ä»pçš„på€å¼€å§‹, ç­›æ‰å¥‡æ•°å€
         {
             for (j = (p * p - 1) / 2; j < SIZE; j += p)
-                WorkCache[j] = 0;	//¶ÔÓ¦µÄÔ­À´µÄÊıÎª j * 2 + 1
+                WorkCache[j] = 0;	//å¯¹åº”çš„åŸæ¥çš„æ•°ä¸º j * 2 + 1
         }
     }
 
-    /* PRIMESÊı×éÓÃÀ´´æ·ÅËØÊı±í£¬PRIMES[0]´æ·Å×ÅËØÊıµÄ¸öÊı */
+    /* PRIMESæ•°ç»„ç”¨æ¥å­˜æ”¾ç´ æ•°è¡¨ï¼ŒPRIMES[0]å­˜æ”¾ç€ç´ æ•°çš„ä¸ªæ•° */
     j = 1;
     PRIMES[j] = 2;
     for (i = 1; i < SIZE; i++)
@@ -76,23 +76,23 @@ void nextSieve(int beg, int end)
     HIGHSQRT = (int)sqrt(end);
     memcpy(WorkCache, BaseCache, SIZE);
     i = 8;			//i = 8, PRIMES[i] = 19
-    p = PRIMES[i];  //Ê¹ÓÃËØÊıÀ´É¸
+    p = PRIMES[i];  //ä½¿ç”¨ç´ æ•°æ¥ç­›
 
     while (p <= LOWSQRT)
     {
         m = beg % p;
         if (m == 0)
-            j = beg;			//jÊÇ´ıÉ¸·¶Î§ÄÚµÚÒ»¸öÄÜ±»pÕû³ıµÄÆæÊı
+            j = beg;			//jæ˜¯å¾…ç­›èŒƒå›´å†…ç¬¬ä¸€ä¸ªèƒ½è¢«pæ•´é™¤çš„å¥‡æ•°
         else
         {
-            j = beg - m + p;	//±£Ö¤jÒ»¶¨ÄÜ±»pÕû³ı
-            if (j % 2 == 0)		//±£Ö¤jÊÇpµÄÆæÊı±¶£¬¼´±£Ö¤jÊÇÆæÊı
+            j = beg - m + p;	//ä¿è¯jä¸€å®šèƒ½è¢«pæ•´é™¤
+            if (j % 2 == 0)		//ä¿è¯jæ˜¯pçš„å¥‡æ•°å€ï¼Œå³ä¿è¯jæ˜¯å¥‡æ•°
                 j += p;
         }
-        k = (j - beg) / 2;		//jÔÚÊı×éÖĞ¶ÔÓ¦µÄÎ»ÖÃ
+        k = (j - beg) / 2;		//jåœ¨æ•°ç»„ä¸­å¯¹åº”çš„ä½ç½®
         for (; k < SIZE; k += p)
         {
-            WorkCache[k] = 0;	//¶ÔÓ¦Ô­À´µÄÊıÎª beg + (k * 2)
+            WorkCache[k] = 0;	//å¯¹åº”åŸæ¥çš„æ•°ä¸º beg + (k * 2)
         }
         i++;
         p = PRIMES[i];
@@ -102,7 +102,7 @@ void nextSieve(int beg, int end)
         k = (p * p - beg) / 2;
         for (; k < SIZE; k += p)
         {
-            WorkCache[k] = 0;	//¶ÔÓ¦Ô­À´µÄÊıÎª beg + (k * 2)
+            WorkCache[k] = 0;	//å¯¹åº”åŸæ¥çš„æ•°ä¸º beg + (k * 2)
         }
         i++;
         p = PRIMES[i];
@@ -182,7 +182,7 @@ int main(void)
     {
         printf("The range is from 1 to ");
         scanf("%10d", &n);
-        scanf("*[^\n]");  //Çå¿ÕÊäÈë»º³åÇø
+        scanf("*[^\n]");  //æ¸…ç©ºè¾“å…¥ç¼“å†²åŒº
         scanf("%*c");
         if (n < 0)
         {

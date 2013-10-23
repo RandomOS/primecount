@@ -1,7 +1,7 @@
-# Description
+## Description
 A program to count primes using sieve of Eratosthenes improved.
 
-# Compile
+## Compile
     For gcc:
         gcc sieve.c -O3 -o sieve
 	
